@@ -5,12 +5,11 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "monospace:pixelsize=12";
+static char *font = "monospace:size=9";
 /* Spare fonts */
 static char *font2[] = {
-        "Vazir:pixelsize=12",
-        "JoyPixels:pixelsize=10",
-};
+        "Vazir:pixelsize=9",
+        "emoji:size=9", };
 static int borderpx = 2;
 
 /*
@@ -99,7 +98,7 @@ char *termname = "st-256color";
 unsigned int tabspaces = 8;
 
 /* bg opacity */
-float alpha = 0.98, alphaUnfocused = 0.96;
+float alpha = 0.95, alphaUnfocused = 0.9;
 
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
@@ -189,10 +188,10 @@ static uint forcemousemod = ShiftMask;
 static MouseShortcut mshortcuts[] = {
 	/* mask                 button   function        argument       release */
         { XK_ANY_MOD,           Button2, selpaste,       {.i = 0},      1 },
-	//{ XK_ANY_MOD,           Button4, ttysend,        {.s = "\031"} },
-	//{ XK_ANY_MOD,           Button5, ttysend,        {.s = "\005"} },
-        { XK_ANY_MOD,           Button4, kscrollup,      {.i = 1} },
-        { XK_ANY_MOD,           Button5, kscrolldown,    {.i = 1} },
+        { ControlMask,          Button4, kscrollup,      {.i = 1} },
+        { ControlMask,          Button5, kscrolldown,    {.i = 1} },
+	{ XK_ANY_MOD,           Button4, ttysend,        {.s = "\031"} },
+	{ XK_ANY_MOD,           Button5, ttysend,        {.s = "\005"} },
 	{ ShiftMask,            Button4, ttysend,        {.s = "\033[5;2~"} },
 	{ ShiftMask,            Button5, ttysend,        {.s = "\033[6;2~"} },
 };
@@ -201,6 +200,10 @@ static MouseShortcut mshortcuts[] = {
 #define MODKEY Mod1Mask
 #define TERMMOD (ControlMask|ShiftMask)
 
+static char *openurlcmd[] = { "/bin/sh", "-c", "st-urlhandler -o", "externalpipe", NULL };
+static char *copyurlcmd[] = { "/bin/sh", "-c", "st-urlhandler -c", "externalpipe", NULL };
+static char *copyoutput[] = { "/bin/sh", "-c", "st-copyout", "externalpipe", NULL };
+
 static Shortcut shortcuts[] = {
         /* mask                 keysym          function        argument */
         { XK_ANY_MOD,           XK_Break,       sendbreak,      {.i =  0} },
@@ -208,6 +211,9 @@ static Shortcut shortcuts[] = {
         { ShiftMask,            XK_Print,       printscreen,    {.i =  0} },
         { XK_ANY_MOD,           XK_Print,       printsel,       {.i =  0} },
         { ControlMask,          XK_equal,       zoomreset,      {.f =  0} },
+	{ MODKEY,              	XK_l,           externalpipe,   {.v = openurlcmd } },
+	{ MODKEY,              	XK_y,           externalpipe,   {.v = copyurlcmd } },
+	{ MODKEY,              	XK_o,           externalpipe,   {.v = copyoutput } },
         { TERMMOD,              XK_plus,        zoom,           {.f = +1} },
         { TERMMOD,              XK_underscore,  zoom,           {.f = -1} },
         { TERMMOD,              XK_C,           clipcopy,       {.i =  0} },
@@ -488,3 +494,4 @@ static char ascii_printable[] =
 	" !\"#$%&'()*+,-./0123456789:;<=>?"
 	"@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_"
 	"`abcdefghijklmnopqrstuvwxyz{|}~";
+
