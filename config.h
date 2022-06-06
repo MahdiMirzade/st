@@ -8,8 +8,14 @@
 static char *font = "monospace:size=9";
 /* Spare fonts */
 static char *font2[] = {
-        "Vazir:pixelsize=9",
-        "emoji:size=9", };
+        "Vazirmatn:pixelsize=9",
+        "Noto Sans Mono CJK JP:pixelsize=9",
+        "Noto Sans Mono CJK HR:pixelsize=9",
+        "Noto Sans Mono CJK HK:pixelsize=9",
+        "Noto Sans Mono CJK SC:pixelsize=9",
+        "Noto Sans Mono CJK TC:pixelsize=9",
+        "Noto Color Emoji:size=9",
+};
 static int borderpx = 2;
 
 /*
